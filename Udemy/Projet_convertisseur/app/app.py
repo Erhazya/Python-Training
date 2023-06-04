@@ -13,7 +13,6 @@ class App(QtWidgets.QWidget):
         self.setup_connections()
         self.setup_css()
 
-
     def setup_ui(self):
         """
         Configure l'interface utilisateur de l'application.
@@ -55,27 +54,33 @@ class App(QtWidgets.QWidget):
         self.spn_montantconverti.setValue(100)
 
     def setup_connections(self):
+        """
+        Configure les connexions des signaux et des slots pour les widgets de l'application.
+        """
         self.cbb_deviseFrom.activated.connect(self.compute)
         self.cbb_deviseTo.activated.connect(self.compute)
         self.spn_montant.valueChanged.connect(self.compute)
         self.btn_inverser.clicked.connect(self.inverser_devise)
 
-
-
     def compute(self):
+        """
+        Effectue le calcul de conversion de devise en fonction des valeurs sélectionnées et mises à jour les résultats.
+        """
         montant = self.spn_montant.value()
         devise_from = self.cbb_deviseFrom.currentText()
         devise_to = self.cbb_deviseTo.currentText()
 
-        try :
-            resultat = self.devise.convert(montant,devise_from,devise_to)
-        except currency_converter.currency_converter.RateNotFoundError : 
+        try:
+            resultat = self.devise.convert(montant, devise_from, devise_to)
+        except currency_converter.currency_converter.RateNotFoundError:
             pass
-        else : 
+        else:
             self.spn_montantconverti.setValue(resultat)
 
-
     def inverser_devise(self):
+        """
+        Inverse les devises sélectionnées et effectue le calcul de conversion.
+        """
         devise_from = self.cbb_deviseFrom.currentText()
         devise_to = self.cbb_deviseTo.currentText()
 
@@ -83,20 +88,17 @@ class App(QtWidgets.QWidget):
         self.cbb_deviseTo.setCurrentText(devise_from)
         self.compute()
 
-
     def setup_css(self):
-
+        """
+        Configure les styles CSS pour l'application.
+        """
         self.setStyleSheet("""
-            background-color: BLACK ;
-            color : WHITE ; 
-            border : none ;
-        
-        
+            background-color: black;
+            color: white;
+            border: none;
         """)
         
-        self.btn_inverser.setStyleSheet("background-color : RED")
-
-
+        self.btn_inverser.setStyleSheet("background-color: red")
 
 app = QtWidgets.QApplication([])
 
