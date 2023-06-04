@@ -1,0 +1,1 @@
+#https://www.docstring.fr/glossaire/name/?utm_source=udemy&utm_campaign=name-glossary
