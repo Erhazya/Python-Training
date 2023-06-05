@@ -66,12 +66,15 @@ class Movie():
 
         if self.movie_name not in contenu:
             contenu.append(self.movie_name)
+            self._write_movies(contenu)
+            return True
         else:
             logging.warning("Le film est déjà dans la liste")
+            return False
 
-        self._write_movies(contenu)
 
-    def remove_movies(self):
+
+    def remove_from_movies(self):
         """
         Supprime le film de la liste des films.
 
@@ -87,5 +90,4 @@ class Movie():
         self._write_movies(contenu)
 
 if __name__ == "__main__":
-    # Affiche la liste des films
-    print(get_movies())
+    pass
