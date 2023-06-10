@@ -1,7 +1,7 @@
 from movie import get_movies
 from PySide6 import QtWidgets
-from PySide6 import QtCore
 from movie import Movie
+
 
 class App(QtWidgets.QWidget):
     def __init__(self):
@@ -34,6 +34,7 @@ class App(QtWidgets.QWidget):
         """
         Définit les films par défaut dans la liste de films.
         """
+
         movies = get_movies()
 
         for movie in movies:

@@ -5,6 +5,7 @@ import logging
 # Configuration du module logging pour afficher les messages de niveau DEBUG
 logging.basicConfig(level=logging.DEBUG)
 
+
 def get_movies():
     """
     Récupère la liste des films à partir du fichier JSON et retourne une liste d'objets Movie correspondants.
@@ -13,13 +14,14 @@ def get_movies():
         list[Movie]: Une liste d'objets Movie représentant les films.
     """
     with open(Movie.DIR_DATA, "r") as f:
-        contenu = json.load(f)
+        content = json.load(f)
 
-    movies = [Movie(movie_title) for movie_title in contenu]
+    movies = [Movie(movie_title) for movie_title in content]
 
     return movies
 
-class Movie():
+
+class Movie:
     DIR_DATA = os.path.join(os.path.dirname(__file__), 'data', 'movie.json')
 
     # Si le fichier de données n'existe pas, crée un fichier JSON vide
@@ -46,15 +48,17 @@ class Movie():
         except json.decoder.JSONDecodeError:
             pass
 
-    def _write_movies(self, contenu=[]):
+    def _write_movies(self, content=None):
         """
         Écrit la liste des films dans le fichier JSON.
 
         Args:
-            contenu (list): La liste des films.
+            content (list): La liste des films.
         """
+        if content is None:
+            content = []
         with open(self.DIR_DATA, "w") as f:
-            json.dump(contenu, f, indent=4, ensure_ascii=False)
+            json.dump(content, f, indent=4, ensure_ascii=False)
 
     def add_movies(self):
         """
@@ -72,22 +76,21 @@ class Movie():
             logging.warning("Le film est déjà dans la liste")
             return False
 
-
-
     def remove_from_movies(self):
         """
         Supprime le film de la liste des films.
 
         Si le film n'est pas dans la liste, affiche un avertissement.
         """
-        contenu = self._get_movies()
+        content = self._get_movies()
 
-        if self.movie_name in contenu:
-            contenu.remove(self.movie_name)
+        if self.movie_name in content:
+            content.remove(self.movie_name)
         else:
             logging.warning("Le film n'est pas dans la liste")
 
-        self._write_movies(contenu)
+        self._write_movies(content)
+
 
 if __name__ == "__main__":
     pass
