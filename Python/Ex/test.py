@@ -32,7 +32,7 @@ def cases_remplissables(grille, joueur, des):
 
 
     """
-
+    
 
     liste_de_point = [None] * 13   #Création de la liste de point , [x] * 13 permet directement de créer une liste de 13 élément , alternative a [None,None,None,....]
  
@@ -42,7 +42,7 @@ def cases_remplissables(grille, joueur, des):
         if grille[joueur][nombre-1] != 0 :
             liste_de_point[nombre-1] = None
         elif grille[joueur][nombre-1] == 0:
-            liste_de_point[nombre-1] = des.count(nombre) * (nombre)
+            liste_de_point[nombre-1] = des.count(nombre) * nombre
         
         
     # Verification si Brelan
@@ -114,99 +114,69 @@ def cases_remplissables(grille, joueur, des):
     return liste_de_point
 
 # Cette fonction permet de lancer 5 dés et de pouvoir relancer certains dés jusqu'à deux fois
+
 def lancer_des():
-    
-    # On initialise une liste vide pour contenir les résultats de chaque dé
     liste_des = []
-    
-    # On lance 5 dés aléatoires et on les ajoute à la liste
     for i in range(5):
         liste_des.append(random.randint(1,6))
-    print("Voici vos dés : ", liste_des)
     
-    # Le joueur a deux possibilités de relance disponibles
+    print("Voici vos dés : ", liste_des)
     nb_relance = 2
     
-    # Tant qu'il reste des relances possibles, on continue la boucle while
     while(nb_relance != 0):
-        
-        # Le joueur décide s'il veut faire une nouvelle relance
-        print("Souhaitez vous en relancer ? Oui/Non", nb_relance , " relance possible")
+        print("Souhaitez-vous en relancer ? Oui/Non", nb_relance , " relance possible")
         relance_status = input()
         
-        # Si le joueur veut relancer les dés
         if relance_status == "Oui" or relance_status == "oui" :
-            
-            # Le joueur choisit combien de dés il veut relancer
-            print("Combien de dés voulez vous relancer ?")
+            print("Combien de dés voulez-vous relancer ?")
             nombre_de_des = input()
-            verif_int = nombre_de_des.isnumeric()
             
-            # Si l'entrée du joueur n'est pas un nombre ou est hors limites, on redemande une entrée valide
-            if not verif_int or int(nombre_de_des) > 5 or int(nombre_de_des) <= 0 :
+            while not nombre_de_des.isdigit() or int(nombre_de_des) > 5 or int(nombre_de_des) <= 0 :
+                nombre_de_des = input("Veuillez donner un nombre valide entre 1 et 5:")
                 
-                while True :        
-                    while not verif_int :
-                        nombre_de_des = input("Veuillez donner un nombre valide :")
-                        verif_int = nombre_de_des.isnumeric()
-                    while verif_int :
-                        if int(nombre_de_des) > 5 or int(nombre_de_des) <= 0 :
-                            nombre_de_des = input("Veuillez donner un nombre valide entre 1 et 5:")
-                            verif_int = nombre_de_des.isnumeric()
-                        else : 
-                            break
-                
-                # Si l'entrée est valide, on sort de la boucle while
-                if verif_int and int(nombre_de_des) <= 5 and int(nombre_de_des) > 0 :
-                    break 
-            
-            # Le joueur choisit quels dés il veut relancer
             print("Le ou lesquelles ?")
             for i in range(int(nombre_de_des))  :
-                
                 choix_des = input()
-                verif_int = choix_des.isnumeric()
+                
+                while not choix_des.isdigit() or int(choix_des) > 5 or int(choix_des) <= 0 :
+                    choix_des = input("Veuillez donner un nombre valide entre 1 et 5:")
                     
-                # Si l'entrée du joueur n'est pas un nombre ou est hors limites, on redemande une entrée valide
-                if not verif_int or int(choix_des) > 5 or int(choix_des) <= 0 :
-                    
-                    while True :        
-                        while not verif_int :
-                            choix_des = input("Veuillez donner un nombre valide :")
-                            verif_int = choix_des.isnumeric()
-                        while verif_int :
-                            if int(choix_des) > 5 or int(choix_des) <= 0 :
-                                choix_des = input("Veuillez donner un nombre valide entre 1 et 5:")
-                                verif_int = choix_des.isnumeric()
-                            else : 
-                                break
-                        
-                        # Si l'entrée est valide, on sort de la boucle while
-                        if verif_int and int(choix_des) <= 5 and int(choix_des) > 0 :
-                            break 
-                            
-                # On remplace la valeur du dé choisi par un nouveau résultat aléatoire
                 liste_des[int(choix_des)-1] = random.randint(1,5)           
 
-            # On affiche la nouvelle liste de dés obtenus après relance
             print(liste_des)
-
-            # On retire une relance disponible
             nb_relance -= 1
         
-        # Si le joueur ne veut pas relancer les dés, on sort de la boucle while
-        else :
+        else:
             break
     
-    # On renvoie la liste finale des résultats de chaque dé
     return liste_des
-    
+
+
+
+s
+
+
+
+
+
 # Cette fonction permet à un joueur de choisir une case pour remplir dans la grille
 def choix_case(grille,joueur,des):
     
     # On affiche les cases déjà remplies par le joueur
-    print("Quelle case souhaites-tu remplir ? Entre 1 et 13 ")
-    print(grille[joueur])    
+    print(f"""Quelle case souhaites-tu remplir ? Entre 1 et 13                
+                            1. Nombre 1 :{grille[joueur][0]}
+                            2. Nombre 2 :{grille[joueur][1]}
+                            3. Nombre 3 :{grille[joueur][2]}
+                            4. Nombre 4 : {grille[joueur][3]}
+                            5. Nombre 5 : {grille[joueur][4]}
+                            6. Nombre 6 :{grille[joueur][5]}
+                            7. Brelan :{grille[joueur][6]}
+                            8. Carré :{grille[joueur][7]}
+                            9. Full :{grille[joueur][8]}
+                            10. Petite suite : {grille[joueur][9]}
+                            11. Grande suite : {grille[joueur][10]}
+                            12. Yatzee : {grille[joueur][11]}
+                            13. Chance :{grille[joueur][12]} """)    
     
     score = None
     
@@ -214,7 +184,7 @@ def choix_case(grille,joueur,des):
     while score == None :
         
         # Le joueur choisit une case
-        choix = input("Donne une case qui n'est pas égale a None :")
+        choix = input("Donne une case qui n'est pas remplie :")
         verif_int = choix.isnumeric()
         
         # Si l'entrée du joueur n'est pas un nombre ou est hors limites, on redemande une entrée valide
@@ -259,7 +229,7 @@ def jeu(nb_joueurs):
         tour_de_jeu = 0
 
 
-    while tour_de_jeu != 1 :
+    while tour_de_jeu != 25 :
         tour_de_jeu += 1
 
         print("TOUR NUMERO ", tour_de_jeu)
@@ -270,7 +240,21 @@ def jeu(nb_joueurs):
             print("Joueur :" , i+1)
             liste_des = lancer_des()
             point_possible = cases_remplissables(grille,i,liste_des)
-            print("Voici la liste de point disponibles avec vos dés :", point_possible)
+            print(f"""Voici la liste de point disponibles avec vos dés :
+                            1. Nombre 1 :{point_possible[0]}
+                            2. Nombre 2 :{point_possible[1]}
+                            3. Nombre 3 :{point_possible[2]}
+                            4. Nombre 4 : {point_possible[3]}
+                            5. Nombre 5 : {point_possible[4]}
+                            6. Nombre 6 :{point_possible[5]}
+                            7. Brelan :{point_possible[6]}
+                            8. Carré :{point_possible[7]}
+                            9. Full :{point_possible[8]}
+                            10. Petite suite : {point_possible[9]}
+                            11. Grande suite : {point_possible[10]}
+                            12. Yatzee : {point_possible[11]}
+                            13. Chance :{point_possible[12]}    """)
+            
             case = choix_case(grille,i,liste_des)
 
             grille[i][int(case[0])-1] = int(case[1])
@@ -278,10 +262,8 @@ def jeu(nb_joueurs):
 
 
 
-    score = 0
     somme1 = 0
     somme2 = 0
-    meilleur_joueurs = 0
     temp_i = 0
     def_i = 0
     for i in range(len(grille)) :
@@ -293,12 +275,10 @@ def jeu(nb_joueurs):
 
         if somme1 > somme2 :
             info_joueur.clear()
-            meilleur_joueurs = somme1
             info_joueur.append(i)
             info_joueur.append(somme1)
         elif somme1 < somme2:
             info_joueur.clear()
-            meilleur_joueurs = somme2
             info_joueur.append(i)
             info_joueur.append(somme2) 
         elif somme1 == somme2 and somme1 > 0 and somme2 > 0 : 
@@ -332,7 +312,6 @@ nb_joueurs = int(input("Donner le nombre de joueur :"))
 game = jeu(nb_joueurs)
 
 
-print(game)
 
 
 if len(game) == 2 :
