@@ -153,7 +153,6 @@ def lancer_des():
 
 
 
-s
 
 
 
