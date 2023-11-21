@@ -1,7 +1,7 @@
 # https://www.docstring.fr/blog/gerer-des-chemins-de-fichiers-avec-pathlib/
 
 
-from pathlib import Path  # Importation du module pathlibµ
+from pathlib import Path  # Importation du module pathlib
 import shutil
 
 print(Path.home())  # Affiche le chemin du répertoire de l'utilisateur courant
